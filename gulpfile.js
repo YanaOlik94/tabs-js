@@ -3,9 +3,10 @@
 const gulp = require("gulp");
 const webpack = require("webpack-stream");
 const browsersync = require("browser-sync");
+const ghPages = require('gulp-gh-pages');
 
 const dist = "./dist/";
-// const dist = "C:/MAMP/htdocs/test";
+
 
 gulp.task("copy-html", () => {
     return gulp.src("./src/index.html")
@@ -92,5 +93,11 @@ gulp.task("build-prod-js", () => {
                 }))
                 .pipe(gulp.dest(dist));
 });
+
+gulp.task('deploy', function() {
+  return gulp.src('./dist/**/*')
+    .pipe(ghPages());
+});
+
 
 gulp.task("default", gulp.parallel("watch", "build"));
